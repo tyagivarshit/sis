@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Sister 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ffe5ec,#ffffff);
+  overflow:hidden;
+  min-height:100vh;
+}
+
+/* PAGE SYSTEM */
+.page{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:20px;
+  transition:0.8s ease;
+}
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(0.95);
+}
+
+/* FLOATING HEARTS */
+.heart{
+  position:absolute;
+  font-size:18px;
+  opacity:0.4;
+  animation:float 12s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* ===== REALISTIC WHITE ENVELOPE ===== */
+.envelope-wrapper{
+  position:relative;
+  width:360px;
+  height:240px;
+  perspective:1500px;
+  cursor:pointer;
+}
+
+.envelope-body{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ffffff;
+  border-radius:8px;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.25),
+    inset 0 0 15px rgba(0,0,0,0.05);
+}
+
+/* subtle fold lines */
+.envelope-body:before,
+.envelope-body:after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  border:1px solid rgba(0,0,0,0.03);
+  border-radius:8px;
+}
+
+/* FLAP */
+.envelope-flap{
+  position:absolute;
+  width:100%;
+  height:140px;
+  background:#ffffff;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;
+  transition:1s ease;
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  z-index:2;
+}
+
+/* HEART SEAL */
+.heart-seal{
+  position:absolute;
+  top:100px;
+  left:50%;
+  transform:translateX(-50%);
+  width:40px;
+  height:40px;
+  background:#ff8fab;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:18px;
+  color:white;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  transition:0.5s;
+  z-index:3;
+}
+
+/* LETTER PREVIEW */
+.letter-preview{
+  position:absolute;
+  width:85%;
+  left:7.5%;
+  top:30px;
+  background:#fffdfd;
+  padding:20px;
+  border-radius:6px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  transform:translateY(120px);
+  transition:1s ease;
+  opacity:0;
+  text-align:center;
+}
+
+/* OPEN STATE */
+.envelope-wrapper.open .envelope-flap{
+  transform:rotateX(180deg);
+}
+
+.envelope-wrapper.open .letter-preview{
+  transform:translateY(-140px);
+  opacity:1;
+}
+
+.envelope-wrapper.open .heart-seal{
+  opacity:0;
+}
+
+.tap-text{
+  margin-top:270px;
+  color:#ff6f91;
+  font-weight:600;
+}
+
+/* ===== LETTER PAGE ===== */
+.letter{
+  width:95%;
+  max-width:520px;
+  background:#fffdfd;
+  padding:45px;
+  border-radius:10px;
+  box-shadow:
+    0 5px 25px rgba(0,0,0,0.2),
+    inset 0 0 40px rgba(255,200,221,0.3);
+  position:relative;
+}
+.letter:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:8px;
+  background:#ff8fab;
+}
+.letter h2{
+  font-family:'Dancing Script',cursive;
+  color:#ff6f91;
+  font-size:32px;
+  margin-bottom:20px;
+}
+.letter p{line-height:1.9;font-size:16px;}
+.signature{
+  margin-top:25px;
+  font-family:'Pacifico',cursive;
+  color:#ff8fab;
+}
+
+/* BUTTON */
+.btn{
+  margin-top:30px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#ff8fab,#ffc8dd);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+.btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 25px #ff8fab;
+}
+
+/* SONG PAGE */
+.songs-wrapper{
+  width:100%;
+  max-width:420px;
+}
+.song-card{
+  background:white;
+  padding:22px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  margin-bottom:18px;
+  transition:0.3s;
+}
+.song-card.active{
+  border:2px solid #ff8fab;
+  box-shadow:0 0 25px #ff8fab;
+}
+.song-card h4{color:#ff6f91;margin-bottom:8px;}
+.song-card p{font-size:14px;margin-bottom:12px;}
+.play-btn{
+  padding:8px 18px;
+  border:none;
+  border-radius:20px;
+  background:#ff8fab;
+  color:white;
+  cursor:pointer;
+}
+
+/* THANK YOU */
+.thankyou{
+  background:white;
+  padding:50px;
+  border-radius:20px;
+  max-width:520px;
+  width:95%;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  text-align:center;
+}
+.thankyou h1{
+  font-family:'Pacifico',cursive;
+  color:#ff6f91;
+  margin-bottom:20px;
+}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .envelope-wrapper{width:280px;height:190px;}
+  .tap-text{margin-top:220px;}
+  .letter{padding:30px;}
+  .letter h2{font-size:26px;}
+}
+</style>
+</head>
+
+<body>
+
+<script>
+for(let i=0;i<25;i++){
+  let heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(6+Math.random()*8)+"s";
+  document.body.appendChild(heart);
+}
+</script>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+  <div class="envelope-wrapper" id="envelope">
+    <div class="envelope-flap"></div>
+    <div class="envelope-body"></div>
+    <div class="heart-seal">💗</div>
+    <div class="letter-preview">
+      <h3 style="color:#ff6f91;">For My Princess 💕</h3>
+      <p>Ek choti si surprise sirf tumhare liye ✨</p>
+    </div>
+  </div>
+  <div class="tap-text">Tap The Envelope 💌</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page hidden" id="page2">
+  <div class="letter">
+    <h2>Meri Pyari Princess 👑</h2>
+    <p>
+      Tum meri life ka sabse beautiful part ho 💖<br><br>
+      Chahe kitni bhi fights ho jaaye,  
+      tu hamesha meri favorite rahegi ✨<br><br>
+      Mujhe tumpe hamesha proud rahega 🫶
+    </p>
+    <div class="signature">– Hamesha Tumhara Bhai 💕</div>
+    <button class="btn" onclick="goSongs()">Open Surprise 🎁</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page hidden" id="page3">
+  <h2 style="color:#ff6f91;margin-bottom:20px;">Songs For You 💖</h2>
+
+  <div class="songs-wrapper">
+    <div class="song-card" onclick="playSong(0,this)">
+      <h4>Count On Me</h4>
+      <p>I'll always be there for you 💕</p>
+      <button class="play-btn">Play ▶</button>
+    </div>
+
+    <div class="song-card" onclick="playSong(1,this)">
+      <h4>Dil Diyan Gallan</h4>
+      <p>For our cute late night talks 🌸</p>
+      <button class="play-btn">Play ▶</button>
+    </div>
+
+    <div class="song-card" onclick="playSong(2,this)">
+      <h4>Tu Jo Mila</h4>
+      <p>You are my happiness ☀️</p>
+      <button class="play-btn">Play ▶</button>
+    </div>
+  </div>
+
+  <button class="btn" onclick="goThankYou()">Next 💞</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page hidden" id="page4">
+  <div class="thankyou">
+    <h1>Thank You 💖</h1>
+    <p>
+      Hamesha mera sath dene ke liye 💕<br><br>
+      Meri har silly baat pe hasne ke liye ✨<br><br>
+      Tu sirf meri behen nahi,<br>
+      meri best friend hai 🌸
+    </p>
+    <button class="btn" onclick="restart()">Replay 💌</button>
+  </div>
+</div>
+
+<script>
+const envelope=document.getElementById("envelope");
+const audio=new Audio();
+const playlist=["song1.mp3","song2.mp3","song3.mp3"];
+
+envelope.addEventListener("click",()=>{
+  envelope.classList.add("open");
+  setTimeout(()=>{
+    page1.classList.add("hidden");
+    page2.classList.remove("hidden");
+  },1200);
+});
+
+function goSongs(){
+  page2.classList.add("hidden");
+  page3.classList.remove("hidden");
+}
+function goThankYou(){
+  page3.classList.add("hidden");
+  page4.classList.remove("hidden");
+}
+function restart(){
+  audio.pause();
+  page4.classList.add("hidden");
+  page1.classList.remove("hidden");
+  envelope.classList.remove("open");
+}
+function playSong(index,element){
+  document.querySelectorAll(".song-card").forEach(card=>card.classList.remove("active"));
+  element.classList.add("active");
+  audio.src=playlist[index];
+  audio.play();
+}
+</script>
+
+</body>
+</html>
